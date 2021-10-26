@@ -1,9 +1,142 @@
 <html>
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Static Template</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
   </head>
 
   <body>
+    <div id="app" class="float-left"></div>
+
+    <button
+      type="button"
+      class="m-2 btn btn-secondary btn-sm float-right"
+      onClick="clearCache()"
+    >
+      Clear Cache
+    </button>
+    <form class="container mb-3" style="display: inline-block;">
+      <div class="form-group">
+        <label for="serverurl">Server URL</label>
+        <input
+          type="url"
+          class="form-control"
+          id="serverurl"
+          placeholder="Enter server url"
+          value="https://aurora.orbita.cloud:8443"
+        />
+      </div>
+      <div class="form-group">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon3">/oeapi</span>
+          </div>
+          <input
+            type="text"
+            class="form-control"
+            id="endpoint"
+            value="/bot/security"
+            aria-describedby="basic-addon3"
+          />
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-sm">
+            <div class="form-group">
+              <label for="provider" class="mr-3" style="float: left;"
+                >Provider</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="provider"
+                placeholder="provider"
+                value="orbita"
+                style="width: 200px;"
+              />
+            </div>
+          </div>
+          <div class="col-sm">
+            <div class="dropdown">
+              <button
+                class="btn btn-info dropdown-toggle"
+                type="button"
+                id="docktype"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Select Dock Type
+              </button>
+              <div class="dropdown-menu" aria-labelledby="docktype">
+                <button class="dropdown-item" type="button">dock-float</button>
+                <button class="dropdown-item" type="button">dock</button>
+                <button class="dropdown-item" type="button">inline</button>
+                <button class="dropdown-item" type="button">sidebar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <input
+          type="text"
+          class="form-control"
+          id="clientId"
+          placeholder="client Id(optional)"
+        />
+      </div>
+      <div class="form-group">
+        <input
+          type="text"
+          class="form-control"
+          id="clientSecret"
+          placeholder="client secret(optional)"
+        />
+      </div>
+      <button type="button" class="btn btn-primary" onClick="getInput()">
+        Submit
+      </button>
+    </form>
+
+    <div class="container">
+      <button
+        type="button"
+        class="btn btn-secondary"
+        onClick="self.OrbitaChatBotPlugin.dockAction('open')"
+      >
+        Open Chatbot
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary"
+        onClick="self.OrbitaChatBotPlugin.dockAction('collapse')"
+      >
+        Collapse Chatbot
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary"
+        onClick="if(self.orbita) { self.orbita.load();}"
+      >
+        Reload Chatbot
+      </button>
+    </div>
+    <div class="spinner-grow" style="width: 3rem; height: 3rem;" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <div class="black"></div>
     <div id="chatWindow"></div>
     <script src="https://3b7c-2401-4900-3384-7873-88f4-1896-e3eb-c44e.ngrok.io/chatbot/v2/chat-plugin.js"></script>
     <script>
@@ -47,7 +180,7 @@
         // });
       };
 
-      let endpointTag = "security";
+      let endpointTag = "appointment-scheduling";
       let domain = endpointTag.split(".");
       domain = domain.slice(domain.length - 2, domain.length);
       endpointTag = domain.join("-");
@@ -99,4 +232,9 @@
       }
     </script>
   </body>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"
+  ></script>
 </html>
