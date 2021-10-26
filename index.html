@@ -1,0 +1,102 @@
+<html>
+  <head>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+  </head>
+
+  <body>
+    <div id="chatWindow"></div>
+    <script src="https://3b7c-2401-4900-3384-7873-88f4-1896-e3eb-c44e.ngrok.io/chatbot/v2/chat-plugin.js"></script>
+    <script>
+      var that = window;
+      var init = function () {
+        if (OrbitaChatBotPlugin) {
+          window.orbita.banner = {
+            title: "''Click here'' - to read the Disclaimer",
+            message:
+              "<p>&nbsp;</p><p>&nbsp;</p><p><strong>Please Note:</strong> I use sources like the U.S. Center for Disease Control (CDC) and others to ensure I have the latest information for you, but I canâ€™t guarantee the accuracy of this information.</p><p>&nbsp;</p><p>Also, Iâ€™m not a substitute for the judgment of a healthcare professional and not intended for use in the diagnosis or treatment of coronavirus (COVID-19) or any other diseases or conditions.</p><p>&nbsp;</p><p>If you suspect a life-threatening emergency, please call 911 or your local emergency response immediately.</p><p>&nbsp;</p><p><a target='_blank' href='https://orbita.ai/orbita-privacy-policy/'>Privacy Policy</a><p>&nbsp;</p>"
+          };
+          console.log("window orbita", window.orbita);
+          // Register Events.
+          OrbitaChatBotPlugin.registerEvents("afterInit", function () {
+            console.log("afterInit");
+          });
+          OrbitaChatBotPlugin.registerEvents("beforeSentRequest", function (
+            data
+          ) {
+            console.log("beforeSentRequest");
+            // your business logic
+            return data;
+          });
+          OrbitaChatBotPlugin.registerEvents("afterResponse", function (data) {
+            // your business logic
+            // eg:  data.orbitaPayload.payload.multiagent.chat.chatText =3D dat=
+            console.log("afterResponse");
+            return data;
+          });
+          OrbitaChatBotPlugin.registerEvents("onDockCollapse", function () {
+            // Function call on an event=20
+            console.log("onDockCollapse");
+          });
+          OrbitaChatBotPlugin.registerEvents("onDockOpen", function () {
+            // Function call on an event=20
+            console.log("onDockOpen");
+          });
+          // End of Register Events.
+          OrbitaChatBotPlugin.initPlugin(window.orbita);
+        }
+        // });
+      };
+
+      let endpointTag = "security";
+      let domain = endpointTag.split(".");
+      domain = domain.slice(domain.length - 2, domain.length);
+      endpointTag = domain.join("-");
+      const chatLocation =
+        "https://3b7c-2401-4900-3384-7873-88f4-1896-e3eb-c44e.ngrok.io";
+
+      that.orbita = {
+        externalTrigger: false,
+        dockDefaultAction: "", // set to 'open' if you want bot to open automatically
+        domId: "chatWindow",
+        launchWord: "open",
+        name: "Orbita",
+        width: "520",
+        height: "640",
+        serverUrl: chatLocation + "/oeapi/bot/" + endpointTag,
+        serverUrlTest: chatLocation + "/oeapi/bot/" + endpointTag,
+        appSettingURL: chatLocation + "/oeapi/settings/" + endpointTag,
+        enableLogin: true,
+        clientId: "123",
+        clientSecret: "123",
+        theme: "dock-float",
+        oauthserverUrl: chatLocation,
+        provider: "orbita",
+        settings: {
+          header: {
+            logoUrl: "/chatbot/v2/assets/branding-mark.svg"
+            //"headerText": "COVID-19",
+            //"subHeaderText": "Chatbot powered by Orbita",
+          },
+          banner: {
+            title: "''Click here'' - to read the Disclaimer edited",
+            message:
+              "<p>&nbsp;</p><p>&nbsp;</p><p><strong>Please Note:</strong> I use sources like the U.S. Center for Disease Control (CDC) and others to ensure I have the latest information for you, but I can’t guarantee the accuracy of this information.</p><p>&nbsp;</p><p>Also, I’m not a substitute for the judgment of a healthcare professional and not intended for use in the diagnosis or treatment of coronavirus (COVID-19) or any other diseases or conditions.</p><p>&nbsp;</p><p>If you suspect a life-threatening emergency, please call 911 or your local emergency response immediately.</p><p>&nbsp;</p><p><a target='_blank' href='https://orbita.ai/orbita-privacy-policy/'>Privacy Policy</a><p>&nbsp;</p>"
+          },
+          theme: {
+            dockFloat: {
+              buttonSrc:
+                "https://assets-engage.orbita.cloud/img/chatbutton.png",
+              buttonTitle: "Hi There!"
+            }
+          }
+        },
+        load: init
+      };
+    </script>
+    <script>
+      if (orbita) {
+        orbita.load();
+      }
+    </script>
+  </body>
+</html>
